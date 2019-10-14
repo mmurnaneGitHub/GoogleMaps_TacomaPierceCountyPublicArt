@@ -1,0 +1,115 @@
+  html, body { 
+    width: 100%;
+    min-width:600px; 
+    height: 100%; 
+    margin: 0px; 
+    padding: 0px;
+    margin-top: 0px;
+    font-family:helvetica,Verdana,arial,sans-serif; 
+    font-size:90%;
+    /*overflow:hidden;*/  
+   } 
+  a {
+  color:#0066CC;
+  text-decoration:none;
+  }
+  a:hover {
+  color:#0066CC;
+  text-decoration:underline;
+  }
+  #borderContainer {
+   width: 100%; 
+   height: 100%; 
+   overflow:hidden;  
+  }
+  #theMap {
+    width: 100%; 
+    height: 100%;
+    overflow:hidden;  
+  }
+  #map_canvas {
+    width: 100%; 
+    height: 100%;
+    overflow:hidden;  
+  }
+  #rightPane {
+   width: 250px;
+   height: 100%; 
+  }
+  #theItinerary2 {
+    display:block;
+  }
+  #theItinerary3 {
+    display:none;font-size:smaller;float:right;padding:4px;
+  }
+  #theItinerary4 {
+    clear:both;display:none;border-bottom:1px solid #C0C0C0;background:#EEEEEE;padding:4px 4px 4px 4px;
+  }
+  .container {
+   font-size:smaller;
+   /*width: 245px;
+   background:#EEEEEE;*/
+  }
+  #directions1 {
+   float:left; 
+  }
+  #directions2 {
+   float:right; 
+  }
+/*all the classes for the various dojo.dnd states and elements*/
+.dojoDndItem { 
+	padding:3px; 
+}
+
+.dojoDndItemOver {
+	background-color: #ededed;
+	cursor:pointer;
+}
+
+.dojoDndItemSelected {
+	background-color: #CCCCCC; color: #444;
+}
+
+.dojoDndItemAnchor {
+	background-color: #CCCCCC; color: black;
+}
+
+.dojoDndItemOver .dojoDndItemSelected {
+	background-color: #ededed;
+}
+
+.dojoDndItemOver .dojoDndItemAnchor {
+	background-color: #ededed;
+}
+
+.dojoDndItemBefore {
+	border-top: 2px solid #369;
+}
+
+.dojoDndItemAfter {
+	border-bottom: 2px solid #369;
+}
+
+.dojoDndAvatar {
+	border:2px solid #ccc;
+}
+	
+.dojoDndAvatarHeader {
+	background-color: #aaa;
+}
+
+.dojoDndAvatarItem {
+	background-color: #fff;
+	border-bottom:1px solid #666;
+}
+
+.dojoDndAvatarItem .itemText {
+	font-size: 120%;
+}
+
+/* works -
+  .dijitDialogTitle {
+   background-color:red;
+  }
+*/
+/* .tundra .dijitDialogUnderlay{ background-color: blue; }*/

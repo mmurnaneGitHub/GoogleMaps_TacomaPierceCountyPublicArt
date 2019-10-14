@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+    
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" /> 
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+    <meta name="description" content="Welcome to the Tacoma-Pierce County Public Art Tour. This virtual tour includes public art pieces throughout Pierce County. Search by picture, location, or artist to explore the wonderful range of public art in our community. TacomaPierceCountyPublicArt.org was developed in partnership between Tacoma and Pierce County Public Art agencies." >
+    <meta name="keywords" content="Tacoma, Pierce County,public art tour,public art, art, picture, location, artist" />
+    
+    <title>Find Tacoma-Pierce County Public Art by Artist and Location</title> 
+    <link rel="shortcut icon" href="shortcut.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="css/default.css" />
+    <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojox/image/resources/Lightbox.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojox/layout/resources/ExpandoPane.css" media="screen">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/tundra/tundra.css" media="screen">
+
+    <!--Dojo-->
+		<script src="https://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"></script>
+
+    <!--Google Maps-->
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPoaOE5Rhl1zF-w8kXaJ0taaDSvdi1L44" type="text/javascript"></script>
+    <!--Additional Public Art js -->
+    <script type="text/javascript" src="js/PublicArt.js"></script>
+    
+  </head>
+    
+<body class="tundra"> 
+		  <div data-dojo-type="dijit/layout/BorderContainer" id="borderContainer">
+
+      <div id="header" dojoType="dijit/layout/ContentPane" region="top" splitter="false" style="padding:0px 5px 0px 5px;line-height: 30px;background-image: url('images/TitleBarPix4.jpg');background-repeat:repeat-x;">
+        <div id="headerContent">&nbsp;<!--header--></div>
+      </div>
+
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, region:'center'" id="theMap">
+          <div id="map_canvas"><!--MAP--></div>
+        </div>
+
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:false, region:'right'" id="rightPane">
+
+  				<div dojoType="dijit/layout/TabContainer" attachParent="true" tabPosition="top" tabStrip="true" id="rightTabs">
+
+  					<!--Search ................................................. -->
+  					<div dojoType="dijit/layout/ContentPane" title="Search" attachParent="true" id="SearchTab">
+					 <!-- Begin search ...............................................--> 
+            <div id="dataQuery" style="overflow:hidden;">
+            <div style="border-top:1px solid #b2b2b2;border-bottom:1px solid #b2b2b2;background:#C8D9F4;padding:4px 0 4px 12px;" dojoType="dijit/form/Form" id="myForm" data-dojo-id="myForm" action="" method="">
+            <table>  
+              <tr>    
+                <td width="50%" align="right">
+                  <font color="#000000" face="MS Sans Serif" size="1">Category: 
+                  </font></td>    
+                <td width="50%" align="left">
+                  <font face="MS Sans Serif" size="1">
+                    <select NAME="Category" id="Category" style="width: 110px;" dojoType="dijit/form/FilteringSelect" onchange="queryData();">      
+                      <option SELECTED value="All">All
+                      </option>      
+                      <option value="Mural">Mural
+                      </option>      
+                      <option value="Sculpture">Sculpture
+                      </option>      
+                      <option value="Other">Other
+                      </option>      
+                    </select>
+                  </font></td>  
+              </tr>                
+              <tr>    
+                <td width="50%" align="right">
+                  <font color="#000000" face="MS Sans Serif" size="1">Artist: 
+                  </font></td>    
+                <td width="50%" align="left">
+                  <font face="MS Sans Serif" size="1">
+                    <select NAME="Artist" id="Artist" style="width: 110px;" dojoType="dijit/form/FilteringSelect" onchange="queryData();">      
+                      <option SELECTED value="All">All
+                      
+                      <option value="Alaska Indians">Alaska Indians</option>
+                      <option value="Allen, Scott">Allen, Scott</option>
+                      <option value="Anderson, Larry">Anderson, Larry</option>
+                      <option value="Anholt, Jill">Anholt, Jill</option>
+                      <option value="Artist Unknown">Artist Unknown</option>
+                      <option value="Barker, Mindy">Barker, Mindy</option>
+                      <option value="Ben Tre, Howard">Ben Tre, Howard</option>
+                      <option value="Bernhard, Betz">Bernhard, Betz</option>
+                      <option value="Beyer, Richard">Beyer, Richard</option>
+                      <option value="Blackstone, Luke">Blackstone, Luke</option>
+                      <option value="Braun, Jo">Braun, Jo</option>
+                      <option value="Brother, Beliz">Brother, Beliz</option>
+                      <option value="Burnett, Elijah">Burnett, Elijah</option>
+                      <option value="Carles, Susan">Carles, Susan</option>
+                      <option value="Cendejas, Kate & Chelsea O\'Sullivan">Cendejas, Kate & Chelsea O'Sullivan</option>
+                      <option value="Chihuly, Dale">Chihuly, Dale</option>
+                      <option value="Church, Fritz">Church, Fritz</option>
+                      <option value="Clinton, Paul">Clinton, Paul</option>
+                      <option value="Cocayne, Troi">Cocayne, Troi</option>
+                      <option value="Conner, Elizabeth">Conner, Elizabeth</option>
+                      <option value="Conner, Elizabeth with Mick Cortese, Diane Novak Newham, and Shaun Peterson">Conner, Elizabeth - etc</option>
+                      <option value="Covenant High School">Covenant High School</option>
+                      <option value="D\'Agostino, Fernada and Nate Slater">D'Agostino, Fernada and Nate Slater</option>
+                      <option value="D\'Agostino, Fernanda with Nate Slater and Marianna Haniger with Fernanda D\'Agostino">D'Agostino, Fernada  - etc</option>
+                      <option value="Dotson, Rachael & Jeremy Gregory (lead artists)">Dotson, R., Gregory, Jeremy</option>
+                      <option value="Dotson, Rachael (lead artist)">Dotson, Rachael</option>
+                      <option value="Dotson, Rachael, Jeremy Gregory, Joni Joachims, Kelda Martensen, Chris Sharp (lead artists)">Dotson, R., Gregory, J., - etc</option>
+                      <option value="Dotson, Rachael, Joni Joachims, Jeremy Gregory (lead artists)">Dotson, R., Joachims, J.,  Gregory, J.</option>
+                      <option value="Edwards, Garth">Edwards, Garth</option>
+                      <option value="Elizabeth Conner">Elizabeth Conner</option>
+                      <option value="Essex, Meredith and students">Essex, Meredith and students</option>
+                      <option value="Fjelde, Jacob">Fjelde, Jacob</option>
+                      <option value="Forrester, William">Forrester, William</option>
+                      <option value="Franklin, David">Franklin, David</option>
+                      <option value="Fuzhou Delegation">Fuzhou Delegation</option>
+                      <option value="Gallagher, David">Gallagher, David</option>
+                      <option value="Gerber, Georgia">Gerber, Georgia</option>
+                      <option value="Goettling, Nickalas">Goettling, Nickalas</option>
+                      <option value="Goldbloom, Brian">Goldbloom, Brian</option>
+                      <option value="Granum, Doug">Granum, Doug</option>
+                      <option value="Gregory, Jeremy">Gregory, Jeremy</option>
+                      <option value="Gregory, Jeremy (lead artist)">Gregory, Jeremy (lead artist)</option>
+                      <option value="Gulsrud, Marc Eric">Gulsrud, Marc Eric</option>
+                      <option value="Hahn, Justin">Hahn, Justin</option>
+                      <option value="Hai Ying Wu">Hai Ying Wu</option>
+                      <option value="Hansen, Diane">Hansen, Diane</option>
+                      <option value="Hansen, Diane & Jennifer Weddermann">Hansen, Diane & Jennifer Weddermann</option>
+                      <option value="Harbor Flag Project">Harbor Flag Project</option>
+                      <option value="Henry, Bob">Henry, Bob</option>
+                      <option value="Henry, Bob, Anthony Duenas, Daniel Duenas">Henry, Bob, Anthony Duenas, Daniel Duenas</option>
+                      <option value="Hill, Eddie">Hill, Eddie</option>
+                      <option value="Hilstad">Hilstad</option>
+                      <option value="Hoivik, Lavonne and George">Hoivik, Lavonne and George</option>
+                      <option value="Horner, Robert">Horner, Robert</option>
+                      <option value="Jensen, Steve">Jensen, Steve</option>
+                      <option value="Jewel, John">Jewel, John</option>
+                      <option value="Jewel, John Patrick">Jewel, John Patrick</option>
+                      <option value="Joachims, Joan with Mary Mann and Jodi Ewin">Joachims, Joan - etc</option>
+                      <option value="Joachims, Joni (lead artist)">Joachims, Joni</option>
+                      <option value="Jordan, Chris & Kenji Stoll (lead artists)">Jordan, Chris & Stoll, Kenji</option>
+                      <option value="Keeler, Stuart and Michael Machnic">Keeler, Stuart and Michael Machnic</option>
+                      <option value="Kelsey, James">Kelsey, James</option>
+                      <option value="Kiefer, Kurt">Kiefer, Kurt</option>
+                      <option value="Kingsley,  Kamala and K.C. Grennan and Scott Fritzel">Kingsley,  Kamala - etc</option>
+                      <option value="Kinoshita, Lisa">Kinoshita, Lisa</option>
+                      <option value="Kroupa, Ed">Kroupa, Ed</option>
+                      <option value="Lahti, Ingrid">Lahti, Ingrid</option>
+                      <option value="LaLonde, Richard and Michael Dupille and artist team">LaLonde, Richard - etc</option>
+                      <option value="Lisa">Lisa</option>
+                      <option value='Long, David'>Long, David</option>
+                      <option value="Luvera, Paul and Mary">Luvera, Paul and Mary</option>
+                      <option value='Lyon, Bret'>Lyon, Bret</option>
+                      <option value="Mahoney, Marilyn">Mahoney, Marilyn</option>
+                      <option value="Mann, Mary">Mann, Mary</option>
+                      <option value="Mann, Mary and Joan Joachims">Mann, Mary and Joan Joachims</option>
+                      <option value="Mapelli,Liz">Mapelli,Liz</option>
+                      <option value="Maritime Fest Community">Maritime Fest Community</option>
+                      <option value="Martensen, Kelda (lead artist)">Martensen, Kelda</option>
+                      <option value="Mattern, Jim">Mattern, Jim</option>
+                      <option value="McLain, Kelly">McLain, Kelly</option>
+                      <option value="Mercado, Jose">Mercado, Jose</option>
+                      <option value="Michaels, Paul R.">Michaels, Paul R.</option>
+                      <option value="Michels, Paul">Michels, Paul</option>
+                      <option value="Morandi, Thomas">Morandi, Thomas</option>
+                      <option value="Mr. Hwang (previously unknown)">Mr. Hwang</option>
+                      <option value="Mullen, Dennis">Mullen, Dennis</option>
+                      <option value="Nakamura, Yuki">Nakamura, Yuki</option>
+                      <option value="Nakamura, Yuki and Joseph Miller">Nakamura, Yuki and Joseph Miller</option>
+                      <option value="Ndebele Team and Evergreen State College Students">Ndebele Team - etc</option>
+                      <option value="Newham, Mick">Newham, Mick</option>
+                      <option value="Nogami, Toyosuke">Nogami, Toyosuke</option>
+                      <option value="Novak, Diane">Novak, Diane</option>
+                      <option value="O\'Leary, Chandler">O'Leary, Chandler</option>
+                      <option value="Olliges, Douglas R.">Olliges, Douglas R.</option>
+                      <option value="O\'Sullivan, Chelsea">O'Sullivan, Chelsea</option>
+                      <option value="O\'Sullivan, Chelsea, Janice L. Warren, Liza Brown (lead artists); Rachel Dotson (design)">O'Sullivan, C., Lee Warren - etc</option>
+                      <option value='Oswald, Natalie'>Oswald, Natalie</option>
+                      <option value="Oswald, Natalie, Kate Cendejas, Yvette Simone, and Janice L. Warren">Oswald, Natalie & Candejas, K. - etc</option>
+                      <option value="Pacific Gallery Artists">Pacific Gallery Artists</option>
+                      <option value="Palmer, Erin Shire">Palmer, Erin Shire</option>
+                      <option value="Pedersen, Gary">Pedersen, Gary</option>
+                      <option value="Perkins, Larry">Perkins, Larry</option>
+                      <option value="Peterson, Shaun">Peterson, Shaun</option>
+                      <option value="Pomegranite Center and community">Pomegranite Center - etc</option>
+                      <option value="Rhind, J. Massey and Roman Bronze Works">Rhind, J. Massey - etc</option>
+                      <option value="Riedener, Claudia, Christopher Jordan & Kenji Stoll">Riedener, Claudia - etc</option>
+                      <option value="Robalino, Mauricio and TAM Education Program, Mauricio Robalino and Students">Robalino, Mauricio - etc</option>
+                      <option value="Rockwell, Don and Vanya Pautov">Rockwell, Don and Vanya Pautov</option>
+                      <option value="Rogers, John">Rogers, John</option>
+                      <option value="Rotating Artists">Rotating Artists</option>
+                      <option value="Rucker, Paul">Rucker, Paul</option>
+                      <option value="Rusty George Creative">Rusty George Creative</option>
+                      <option value="Satow, Heath">Satow, Heath</option>
+                      <option value="Schlemmer, Jennevieve (a.k.a. Jennifer)">Schlemmer, Jennevieve</option>
+                      <option value="School of the Arts">School of the Arts</option>
+                      <option value="Schweder, Alex">Schweder, Alex</option>
+                      <option value="Scuri, Vicki">Scuri, Vicki</option>
+                      <option value="Sharp, Chris">Sharp, Chris</option>
+                      <option value="Sharp, Chris (lead artist)">Sharp, Chris (lead artist)</option>
+                      <option value="Shaver, Clare">Shaver, Clare</option>
+                      <option value='Simone, Yvette'>Simone, Yvette</option>
+                      <option value="Simpson, Buster">Simpson, Buster</option>
+                      <option value="Slater, Nate">Slater, Nate</option>
+                      <option value="Spadafore, Chris">Spadafore, Chris</option>
+                      <option value="Stoll, Kenji & Chris Jordan (lead artists)">Stoll, Kenji & Jordan, Chris</option>
+                      <option value='Stoll, Kenji, Chris Jordan, Troy Long, Travis Galindo, Jared Haviland'>Stoll, K., Jordan, C., Long, T., Gallindo - etc</option>
+                      <option value="Varotsos, Costas">Varotsos, Costas</option>
+                      <option value="Warren, Janice L. & Liza A. Brown">Warren, Janice L. & Brown, Liza A.</option>
+                      <option value="Warren, Janice Lee">Warren, Janice Lee</option>
+                      <option value="Washington, James">Washington, James</option>
+                      <option value="Webster Apartments">Webster Apartments</option>
+                      <option value="Wooten, Chris and Vladimir Shakov">Wooten, Chris and Vladimir Shakov</option>
+                      <option value="Wyland, Robert">Wyland, Robert</option>
+                      <option value="Youngers, Otto">Youngers, Otto</option>
+
+                    </select>
+                  </font></td>  
+              </tr>  
+              <tr>    
+                <td width="50%" align="right">
+                  <font color="#000000" face="MS Sans Serif" size="1">
+                  Location: 
+                  </font></td>    
+                <td width="50%" align="left">
+                  <font face="MS Sans Serif" size="1">
+                    <select NAME="Location"  id="Location" style="width: 110px;" dojoType="dijit/form/FilteringSelect" onchange="queryData();">
+                      <option SELECTED value="All">All</option>      
+                      <option value="Central">Central</option>
+                      <option value="Downtown*">Downtown</option>
+                      <option value="East Tacoma">East Tacoma</option>
+                      <option value="Lakewood">Lakewood</option>
+                      <option value="Lewis Memorial Park, Fort Lewis">Lewis Park</option>
+                      <option value="NE Tacoma">NE Tacoma</option>
+                      <option value="New Tacoma">New Tacoma</option>
+                      <option value="North End">North End</option>
+                      <option value="Puyallup">Puyallup</option>
+                      <option value="South Tacoma*">South Tacoma</option>
+                      <option value="University Place">University Place</option>
+                      <option value="West End">West End</option>
+                   </select>
+                  </font></td>  
+              </tr>  
+ 
+              <tr>    
+                <td width="50%" align="right">    
+                    <!--<button id="buttonReset" type="button"></button>-->
+                </td>
+                <td width="50%" align="left">
+                    <!--<button id="buttonSearch" type="button"></button>-->
+                    <button id="buttonReset" type="button"></button>
+                </td>
+              </tr>
+
+              <tr>    
+                <td colspan="2" align="center">
+                    <div id="artCount"></div>
+                </td>
+              </tr>
+
+            </table>
+            <!--</form>-->
+            </div>
+
+            <div id="searchResults"><!----></div>
+
+            </div> <!--dataQuery-->
+ 
+           
+            </div> <!--searchTab-->
+
+  					<!--Itinerary ................................................. -->
+  					<div dojoType="dijit/layout/ContentPane" title="Itinerary" id="ItineraryTab"  attachParent="true">
+                
+            		<div id="theItinerary1"><!--Instructions--></div>
+
+            		<div id="theItinerary2"><!--<i>No Studios selected.</i>--></div>
+                
+                <div id="theItinerary3">
+                   <i>Last Studio becomes final destination.<br>Optional: Drag Studios into desired order.</i><br>
+                   <button id="buttonDelete" type="button"></button>
+                   <button id="buttonRemove" type="button"></button>
+                   <br>&nbsp;
+                </div>
+
+                <div id="theItinerary4">
+                   <center><input type="radio" id="optimize" name="optimize"/> Optimize
+                   <input type="radio" id="currentOrder" name="optimize" CHECKED /> Use current order
+                   <br><button id="buttonDirections" type="button"></button></center>
+                </div>
+
+  					</div>
+  
+  					<!--Directions ................................................. -->
+  					<div dojoType="dijit/layout/ContentPane" title="Directions" attachParent="true" id="DirectionsTab">
+  					 <div id="directions1"><!--Print Directions--></div>
+  					 <div id="directions2"><!--<a href="javascript:togglePane('rightPane','rightTabs','ItineraryTab');">Modify Itinerary</a>--></div>
+             <br>&nbsp;
+             <div id="directionsPanel"><!--Google directions--></div>
+  					</div>
+  
+  				</div> <!--rightTabs-->
+  
+  			</div> <!--rightPane-->
+
+    </div> <!--container-->
+
+		<!--Popups-->
+
+<!--<div id="popUpWelcome"></div>-->
+
+        <div id="mapWelcome" dojoType="dijit/Dialog" title="Tacoma-Pierce County Public Art Tour"  style="text-align:center;">
+            <div style="width: 500px; height: 350px; overflow: auto; border:1px solid #b2b2b2;background:#C8D9F4">
+              <table>
+                <tr>
+                    <td>
+                     <p><b>Welcome!</b></p>
+                     <p>This virtual tour includes some of the public art pieces that can be discovered throughout Pierce County, Washington. Search by category, location, or artist to explore the diverse range of public art and map out a customized itinerary to experience the work in person.</p>
+                     <p>This public art directory was developed in partnership between the City of Tacoma and Pierce County Public Art agencies.</p>
+                     
+                       <br><button dojoType="dijit/form/Button" type="button" onClick="dijit.byId('mapWelcome').hide();">
+                            Begin Search
+                        </button>
+                     <p><b>Feedback/Comments:</b> <br>We appreciate any input on improving this site. Please e-mail <a href="mailto:AMCBRIDE@ci.tacoma.wa.us?subject=TacomaPierceCountyPublicArt.org">us</a></p>
+                   </td>
+                </tr>
+              </table>
+            </div>
+        </div>
+			
+</body>
+
+</html>
