@@ -664,8 +664,8 @@ function go2art(lat, lon, id) {
   bounds.extend(point);
   gmap.setZoom(17); //minimum zoom
   gmap.setCenter(bounds.getCenter());
-  google.maps.event.trigger(markersArray[id], 'mouseover');  //highlight marker & open summary info window
   lastID = id;  //save last id for mouseout next time (remove highlighted marker)
+  setTimeout(() => {  google.maps.event.trigger(markersArray[id], 'mouseover'); }, 500);   //highlight marker & open summary info window - need a delay for zoom to complete
 }
 //End search functions -------------------------------------
 
