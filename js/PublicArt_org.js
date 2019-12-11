@@ -180,6 +180,41 @@ function initialize() {
   gmap.controls[google.maps.ControlPosition.LEFT_TOP].push(controlDiv);
   //End Legend as a control------------------------
 
+  //Add Zoom Home image as a control------------------------
+  var controlDiv = document.createElement('DIV');  // Create a div to hold the control.
+  controlDiv.style.padding = '0px 10px 5px 5px';  // Offset the control from the edge of the map
+
+  // Set CSS for the control border
+  var controlUI = document.createElement('DIV');
+  controlUI.style.backgroundColor = 'rgba(102,102,102,0.80)';
+  controlUI.style.borderStyle = 'solid';
+  controlUI.style.borderWidth = '1px';
+  controlUI.style.borderRadius = '2px';
+  controlUI.style.borderColor = '#D2D4D7';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.width = '38px';
+  controlUI.style.height = '38px';
+
+  //Add logo image
+  var myLogo = document.createElement("img");
+  myLogo.src = "images/homeWhite2.png";
+  myLogo.style.width = '32px';
+  myLogo.style.height = '32px';
+  myLogo.style.margin = '3px 0px 0px 3px';
+  myLogo.title = "Zoom to Selected Art";
+  //Append to each div
+  controlUI.appendChild(myLogo);
+  controlDiv.appendChild(controlUI);
+
+  //Add control to map
+  gmap.controls[google.maps.ControlPosition.RIGHT_TOP].push(controlDiv);
+
+  // Set click event
+  google.maps.event.addDomListener(controlUI, 'click', function () {
+    gmap.fitBounds(bounds);
+  });
+  //End Zoom Home as a control------------------------
+
   //Add overlay to map to get pixel location for mouse hover
   overlay = new google.maps.OverlayView();
   overlay.draw = function () { };
@@ -287,6 +322,7 @@ function closeDialog() {
 
 function myDialog(info, title) {
   myDlg = new dijit.Dialog({
+    //style: "width: 280px; overflow:auto;",  //set max for iPhone 6/7/8 Chrome Dev Tools
     draggable: false
   });
   //Add additional attributes...
@@ -324,7 +360,7 @@ function calcRoute() {
     optimizeWaypoints: document.getElementById('optimize').checked
   };
   if (items.length == 0) {
-     alert("No Sites in Itinerary.");
+    alert("No Sites in Itinerary.");
   } else if (dojo.byId("StartAddress1").value == "") {
     alert("Please enter a Starting Point Address.");
   } else {  //get directions
@@ -563,10 +599,10 @@ function addMarkers(jsonData) {
 
       //SUMMARY
       sum_content += "<div style='color:rgb(56,64,142); font-weight:bold; font-style:italic; text-align:center; '>" + jsonData[i].Title + "</div>";
-      sum_content += "<div style=\"text-align:center;\"><b>" + jsonData[i].Artist + "</b>";
+      sum_content += "<div style=\"text-align:center;\"><div style='text-align:center; max-width: 260px;'><b>" + jsonData[i].Artist + "</b></div>";  //adjust width based on myDlg (280-20)
       //Image field value manipulation
-      var sum_Image = "images/artwork/" + jsonData[i].Image.substring(jsonData[i].Image.lastIndexOf("\\"), jsonData[i].Image.lastIndexOf("#")).replace("\\", "");;
-      var sum_Image2 = sum_Image.replace(".JPG", "1.JPG").replace(".jpg", "1.jpg");
+      var sum_Image = "images/artwork/" + jsonData[i].Image;
+      var sum_Image2 = sum_Image.replace(".JPG", "1.JPG").replace(".jpg", "1.jpg");  //fix any capitalizations
       //Format lightbox string for artist names like D'Agostino  or titles like Adam's Rib
       sum_content += "<br><a href=\"javascript:myLightbox('" + sum_Image + "','" + jsonData[i].Artist.replace(/'/g, "\\'") + ": <i>" + jsonData[i].Title.replace(/'/g, "\\'") + "</i>')\"><img src=\"" + sum_Image2 + "\" style=\"max-width:100px;max-height:100px;margin:2px 5px 5px 0px;border:solid 1px #999;padding:2px\"  title='Click to enlarge photo'/></a>";
       sum_content += "<br><i>Click marker for details</i></div>";
@@ -574,11 +610,14 @@ function addMarkers(jsonData) {
       //DETAILED DESCRIPTIONS---------------------------------------
       //TITLE BAR
       var title_content = "<span style='color:rgb(56,64,142);'>" + jsonData[i].Title + "</span>"
-      detail_content += "<div style='clear:both;width: 475px;'>";  //start address header - optimal width for IE varies screen size????
+      detail_content += "<div style='clear:both;float:left;width: 260px;'>";  //start address header - adjust width based on myDlg (280-20)
       var iAddress = jsonData[i].Location1 + ", " + jsonData[i].City;  //address for Itinerary
       detail_content += "<div style='clear:both;'>";
       detail_content += "<span style='color:rgb(56,64,142);'>" + iAddress + "</span>";
-      detail_content += "&nbsp;|&nbsp;<a href=\"https://maps.google.com/maps?daddr=" + iAddress + ", WA\" target='_blank'>Get Directions</a>";
+      detail_content += "<br><a href=\"https://maps.google.com/maps?daddr=" + iAddress + ", WA\" target='_blank'>Directions</a>";
+      //Zoom to Studio
+      detail_content += "&nbsp;|&nbsp;<a href='javascript:go2art(" + jsonData[i].Lat + ", " + jsonData[i].Long + ")' title='Close this window and zoom map to Studio.'>Zoom</a>";
+
       detail_content += "&nbsp;|&nbsp;<a href=\"https://maps.google.com/?cbll=" + jsonData[i].Lat + "," + jsonData[i].Long + "&cbp=13,0,,,&layer=c&z=17\" target='_blank'>Street View</a><br>";
       //Itinerary!!!!!!!!!!!!!!!!
       var iStudio = iAddress;  //Itinerary Site Address
@@ -592,7 +631,7 @@ function addMarkers(jsonData) {
       detail_content += "<a href=\"javascript:myLightbox('" + sum_Image + "','" + jsonData[i].Artist.replace(/'/g, "\\'") + ": <i>" + jsonData[i].Title + "</i>')\"><img style ='float:left;margin:2px 5px 5px 5px;border:solid 1px #999;padding:2px' src='" + sum_Image2 + "' title='Click to enlarge photo' max-height='100px' max-width='100px'></a>";
       detail_content += "</div>"
       //Artist name
-      detail_content += "<div style='float:right; width:275px;'>";
+      detail_content += "<div style='width: 240px;float:left;'>";  //leave room for vertical scroll bar (250-10)
       detail_content += "<b>" + jsonData[i].Artist;
       detail_content += "</b><br>";
       detail_content += "<span style='color:rgb(56,64,142);'><I>Category: </span>" + jsonData[i].Category + "</I><br>";
@@ -654,6 +693,10 @@ function myBlur() {
 }
 
 function go2art(lat, lon, id) {
+  if (typeof myDlg !== 'undefined') {  // Does not execute if variable is `undefined`
+    myDlg.destroy();  //Close open details dialog
+  }
+
   //Check for previously highlighted marker
   if (lastID != null) {
     google.maps.event.trigger(markersArray[lastID], 'mouseout');  //unhighlight marker & close summary info window
@@ -665,7 +708,7 @@ function go2art(lat, lon, id) {
   gmap.setZoom(17); //minimum zoom
   gmap.setCenter(bounds.getCenter());
   lastID = id;  //save last id for mouseout next time (remove highlighted marker)
-  setTimeout(() => {  google.maps.event.trigger(markersArray[id], 'mouseover'); }, 500);   //highlight marker & open summary info window - need a delay for zoom to complete
+  setTimeout(() => { google.maps.event.trigger(markersArray[id], 'mouseover'); }, 500);   //highlight marker & open summary info window - need a delay for zoom to complete
 }
 //End search functions -------------------------------------
 
