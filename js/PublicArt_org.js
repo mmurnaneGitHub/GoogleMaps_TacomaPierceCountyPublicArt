@@ -152,22 +152,20 @@ function initialize() {
     alt: "Show standard map"
   };
 
-  //Set background map  
+  //Set background map - styled   
   var GrayMapType = new google.maps.StyledMapType(styleGray, styledMapOptions);
   gmap.mapTypes.set(MY_MAPTYPE_ID, GrayMapType);
 
-  //Add Legend image as a control------------------------
+  //Add Legend image as a control---------------------------------------------------------------------
   var controlDiv = document.createElement('DIV');  //Create a div to hold the control.
   controlDiv.style.padding = '5px 5px 5px 5px';  //Offset the control from the edge of the map
-
   // Set CSS for the control border
   var controlUI = document.createElement('DIV');
   controlUI.style.backgroundColor = '#77C9B2';
   controlUI.style.borderStyle = 'solid';
   controlUI.style.borderWidth = '2px';
   controlUI.style.borderColor = '#b2b2b2';
-
-  //Add logo image
+  //Add legend image
   var myLogo = document.createElement("img");
   myLogo.src = "images/legend.jpg";
   myLogo.style.width = '69px';
@@ -175,15 +173,13 @@ function initialize() {
   //Append to each div
   controlUI.appendChild(myLogo);
   controlDiv.appendChild(controlUI);
-
-  //Add logo control to map
+  //Add legend control to map
   gmap.controls[google.maps.ControlPosition.LEFT_TOP].push(controlDiv);
-  //End Legend as a control------------------------
+  //End Legend as a control---------------------------------------------------------------------------
 
-  //Add Zoom Home image as a control------------------------
+  //Add Zoom Home image as a control------------------------------------------------------------------
   var controlDiv = document.createElement('DIV');  // Create a div to hold the control.
   controlDiv.style.padding = '0px 10px 5px 5px';  // Offset the control from the edge of the map
-
   // Set CSS for the control border
   var controlUI = document.createElement('DIV');
   controlUI.style.backgroundColor = 'rgba(102,102,102,0.80)';
@@ -194,8 +190,7 @@ function initialize() {
   controlUI.style.cursor = 'pointer';
   controlUI.style.width = '38px';
   controlUI.style.height = '38px';
-
-  //Add logo image
+  //Add button image
   var myLogo = document.createElement("img");
   myLogo.src = "images/homeWhite2.png";
   myLogo.style.width = '32px';
@@ -205,15 +200,13 @@ function initialize() {
   //Append to each div
   controlUI.appendChild(myLogo);
   controlDiv.appendChild(controlUI);
-
   //Add control to map
   gmap.controls[google.maps.ControlPosition.RIGHT_TOP].push(controlDiv);
-
-  // Set click event
+  // Set button click event
   google.maps.event.addDomListener(controlUI, 'click', function () {
     gmap.fitBounds(bounds);
   });
-  //End Zoom Home as a control------------------------
+  //End Zoom Home as a control----------------------------------------------------------------------
 
   //Add overlay to map to get pixel location for mouse hover
   overlay = new google.maps.OverlayView();
@@ -245,7 +238,7 @@ function initialize() {
   //Header content
   var headerText = "<div style='float:left;color:rgb(0,0,0); font-weight:bold;'>Tacoma-Pierce County Public Art Tour</div>";
   headerText += "<div style=\"float:right;\"><input type=\"text\"  title='Search for title or artist by keyword' name='theKeywords' id='theKeywords' value=' Search by title or artist...' onmouseover=\"if (this.value==' Search by title or artist...') this.value = ''\" onmouseout=\"if (this.value=='')this.value=' Search by title or artist...';\" onkeypress=\"if(event.keyCode==13) {newKeyQuery();}\" style=\"background: white url(images/search.png) right no-repeat;padding-right: 17px;\"/></div>";
-  headerText += "<div style='float:right;'><a href='#' onclick=\"javascript:dijit.byId('mapWelcome').show();\" style='color:#EEEEEE; font-weight:bold;'>Welcome - Contact Us</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>";
+  headerText += "<div style='float:right;'><a href='javascript:void(0)' onclick=\"javascript:dijit.byId('mapWelcome').show();\" style='color:#EEEEEE; font-weight:bold;'>Welcome - Contact Us</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>";
   dojo.byId("headerContent").innerHTML = headerText;
 
   //Itinerary list
@@ -267,9 +260,7 @@ function initialize() {
 
 function addMarker(Latitude, Longitude, sum, info, title, imageIcon, ID) {
   var location = new google.maps.LatLng(Latitude, Longitude);
-
-  //Add marker to map
-  var marker = new google.maps.Marker({
+  var marker = new google.maps.Marker({  //Add marker to map
     position: location,
     id: ID,
     shadow: shadow,
@@ -278,45 +269,35 @@ function addMarker(Latitude, Longitude, sum, info, title, imageIcon, ID) {
     optimized: false,  //so draggable marker can be put behind theses markers
     map: gmap
   });
-
-  //Add marker events
+  //Add marker events (3)
   google.maps.event.addListener(marker, 'mouseover', function () {
-    marker.setIcon(imageOver);
-
-    //Map tip - summary window
+    closeDialog();  //close any open map tips
+    marker.setIcon(imageOver);  //Highlight marker
     var evt = marker.getPosition();
     var containerPixel = overlay.getProjection().fromLatLngToContainerPixel(evt);
-
-    closeDialog();  //close any open map tips
-
-    var dialog = new dijit.TooltipDialog({
+    var dialog = new dijit.TooltipDialog({  //Map tip - summary window
       id: "tooltipDialog",
       content: sum,
       style: "position: absolute;z-index:100"
     });
-
     dialog.startup();
     dojo.style(dialog.domNode, "opacity", 0.85);
     dijit.placeOnScreen(dialog.domNode, { x: containerPixel.x, y: containerPixel.y }, ["BL", "TL", "BR", "TR"], { x: 25, y: 15 });  //summary popup offset
   });
-
   google.maps.event.addListener(marker, 'mouseout', function () {
-    marker.setIcon(imageIcon);
+    marker.setIcon(imageIcon); //Back to default marker icon
     closeDialog();
   });
-
   google.maps.event.addListener(marker, 'click', function () {
-    myDialog(info, title);
+    myDialog(info, title);  //Details popup
   });
-
   markersArray.push(marker);  //Add marker to array for later removal from map
 }
 
 function closeDialog() {
-  //close any open map tips
   var widget = dijit.byId("tooltipDialog");
   if (widget) {
-    widget.destroy();
+    widget.destroy();  //close any open map tips
   }
 }
 
@@ -402,8 +383,8 @@ function reset() {
 function clearSearchBox() {
   document.getElementById('theKeywords').value = ' Search by title or artist...'
 }
+
 function togglePane(panel, tab, tabPick) {
-  //may not need panel variable!!!!!!!!!!!!!
   if (!(dijit.byId(panel)._showing)) {
     dijit.byId(tab).selectChild(tabPick);  //open panel & show tab
   } else {
@@ -449,16 +430,14 @@ function addStudio(studio) {
     dojo.byId("theItinerary3").style.display = 'block';
     dojo.byId("theItinerary4").style.display = 'block';
   }
-
 }
 
 function deleteSelected() {
   Itinerary.deleteSelectedNodes();
 }
-
 //end Itinerary list functions ----------------------
 
-function PrintContent() {
+function PrintContent() {  //Print directions
   var DocumentContainer = document.getElementById("directionsPanel");
   var WindowObject = window.open('', 'PrintWindow', 'width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes');
   WindowObject.document.writeln(DocumentContainer.innerHTML);
@@ -668,7 +647,7 @@ function addMarkers(jsonData) {
       //Add links to summary information for Search tab
       search_content += "<center><b><a title='Zoom map to artwork and highlight' href='javascript:go2art(" + jsonData[i].Lat + ", " + jsonData[i].Long + "," + markerArrayID + ")'>Zoom</a>  |";
       search_content += "  <a title='Complete artwork details' href='javascript:myBlur();closeDialog();google.maps.event.trigger(markersArray[" + markerArrayID + "],\"click\")'>Details</a>  |";
-      search_content += "  <a title='Back to top of page' href='#dataQuery'>Back to Top</a></b></center>";
+      search_content += "  <a title='Back to top of page' href='javascript:topFunction();'>Back to Top</a></b></center>";
       search_content += "<div style='clear:both;'><hr color='#ACB1DB'></div>";  //Add divider
 
       bounds.extend(new google.maps.LatLng(jsonData[i].Lat, jsonData[i].Long));  //Extend map bounds for last marker
@@ -687,18 +666,19 @@ function addMarkers(jsonData) {
   dojo.byId("searchResults").innerHTML = search_content;  //Add details to Search Tab
 }
 
-function myBlur() {
-  //fix for non-IE browsers jumping up to dojo search form after closing lightbox | need to move focus away from search box (keywords instead)
-  document.getElementById('theKeywords').focus();
+function topFunction() {  // When the user clicks on the button, scroll to the top of the panel
+  this.SearchTab.scrollTop = 0;  //scroll to top of id=SearchTab
+}
+
+function myBlur() {  //fix for non-IE browsers jumping up to dojo search form after closing lightbox
+  document.getElementById('theKeywords').focus();  //need to move focus away from search box (keywords instead)
 }
 
 function go2art(lat, lon, id) {
   if (typeof myDlg !== 'undefined') {  // Does not execute if variable is `undefined`
     myDlg.destroy();  //Close open details dialog
   }
-
-  //Check for previously highlighted marker
-  if (lastID != null) {
+  if (lastID != null) {  //Check for previously highlighted marker
     google.maps.event.trigger(markersArray[lastID], 'mouseout');  //unhighlight marker & close summary info window
   }
   //New map limits
@@ -708,7 +688,7 @@ function go2art(lat, lon, id) {
   gmap.setZoom(17); //minimum zoom
   gmap.setCenter(bounds.getCenter());
   lastID = id;  //save last id for mouseout next time (remove highlighted marker)
-  setTimeout(() => { google.maps.event.trigger(markersArray[id], 'mouseover'); }, 500);   //highlight marker & open summary info window - need a delay for zoom to complete
+  setTimeout(function () { google.maps.event.trigger(markersArray[id], 'mouseover'); }, 500);   //highlight marker & open summary info window - need a delay for zoom to complete
 }
 //End search functions -------------------------------------
 
@@ -727,6 +707,7 @@ require([
   "dijit/Dialog",  //details window
   "dijit/TooltipDialog",  //summary window
   "dojo/dnd/Source",  //Itinerary list
+  "dojox/layout/ExpandoPane",  //Expando panel - Toggle open/close with Begin Search button on Map Welcome Popup
   "dojo/domReady!"
 ],
 
@@ -735,6 +716,6 @@ require([
     initialize();  //Create map
     getJson();  //Put locations on map
     dialog = new dojox.image.LightboxDialog().startup();  //FF fix for lightbox
-    dijit.byId('mapWelcome').show();  //Show Map Welcome
+    dijit.byId('mapWelcome').show();  //Show Map Welcome Popup
   }
 );
